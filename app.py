@@ -3,13 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pandas_datareader import data as pdr
 import yfinance as yf
-# from keras.models import load_model
+from keras.models import load_model
 import streamlit as st
 from datetime import datetime
 
 yf.pdr_override()
-start_date = datetime(2010,1,1)
-end_date = datetime(2019,12,31)
+start_date = datetime(2014,1,1)
+end_date = datetime(2024,3,1)
 
 st.title('Stock Trend Prediction')
 
@@ -19,7 +19,7 @@ y_symbols.append(user_input)
 df = pdr.get_data_yahoo(y_symbols, start=start_date, end=end_date)
 
 # Describing Data
-st.subheader('Data from 2010 - 2019')
+st.subheader('Data from 2014 - 2023')
 st.write(df.describe())
 
 # Visualizations
@@ -59,7 +59,7 @@ model = load_model('keras_model.h5')
 
 # Testing part
 past_100_days = data_training.tail(100)
-final_df = past_100_days.append(data_testing, ignore_index=True)
+final_df = past_100_days._append(data_testing, ignore_index=True)
 input_data = scaler.fit_transform(final_df)
 
 x_test = []
@@ -67,7 +67,7 @@ y_test = []
 
 for i in range(100, input_data.shape[0]):
   x_test.append(input_data[i-100:i])
-  y_test.append(input_data[i:0])
+  y_test.append(input_data[i,0])
 
 x_test, y_test = np.array(x_test), np.array(y_test)
 y_predicted = model.predict(x_test)
@@ -87,4 +87,3 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 st.pyplot(fig2)
-
