@@ -5,6 +5,7 @@ from pandas_datareader import data as pdr
 import yfinance as yf
 from keras.models import load_model
 import streamlit as st
+from streamlit_option_menu import option_menu
 from datetime import datetime
 
 # Set page configuration
@@ -32,8 +33,13 @@ st.markdown(
 )
 
 # Navbar
-st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Go to", ["Introduction", "Home"])
+with st.sidebar: 
+  page = option_menu(
+      menu_title="Maicln Menu",
+      options=["Introduction", "Home"],
+      icons=["book", "house"],
+      # orientation="horizontal"
+  )
 
 # Footer
 st.markdown(
@@ -145,12 +151,12 @@ if page == "Home":
 
 elif page == "Introduction":
     # Introduction page content
-    st.title("Introduction to the Web App")
-    st.write("Welcome to Website, your gateway to informed investment decisions powered by cutting-edge technology. We leverage the power of Long Short-Term Memory (LSTM) models, a form of Artificial Intelligence (AI), to analyze vast amounts of historical stock data and identify potential future trends.")
+    st.title("Introduction to the Stock Trend Predictor")
+    st.write("Welcome to our Website :wave:, your gateway to informed investment decisions powered by cutting-edge technology. We leverage the power of Long Short-Term Memory (LSTM) models, a form of Artificial Intelligence (AI), to analyze vast amounts of historical stock data and identify potential future trends.")
     st.write("This web app provides stock trend predictions based on historical data.")
     st.write("You can input a stock ticker symbol and view various visualizations and predictions.")
     st.subheader("Unlocking Market Insights")
     st.write("Our LSTM model goes beyond traditional technical indicators by capturing complex patterns within historical data. This allows us to provide you with insights that may not be readily apparent, potentially helping you stay ahead of the curve.")
-    st.subheader("Disclaimer:")
+    st.subheader("❗Disclaimer:")
     st.write("It's important to remember that stock market predictions are inherently probabilistic. Past performance is not necessarily indicative of future results. We encourage you to conduct thorough research and consider your own financial goals before making any investment decisions.")
 

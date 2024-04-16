@@ -3,19 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pandas_datareader import data as pdr
 import yfinance as yf
-import streamlit as st
 from datetime import datetime
 
 yf.pdr_override()
 start_date = datetime(2014,1,1)
 end_date = datetime(2024,3,1)
 
-st.title('Stock Trend Prediction')
 
-user_input = st.text_input('Enter Stock Ticker', 'AAPL')
-y_symbols = []
-y_symbols.append(user_input)
-df = pdr.get_data_yahoo(y_symbols, start=start_date, end=end_date)
+df = pdr.get_data_yahoo('AAPL', start=start_date, end=end_date)
 
 # Splitting Data into Training and Testing
 data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
