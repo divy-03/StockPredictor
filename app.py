@@ -164,6 +164,8 @@ elif page == "Forecasting":
     st.subheader('Stock Price')
     fig = plt.figure(figsize=(12, 6))
     plt.plot(df1)
+    plt.xlabel('Days')
+    plt.ylabel('Price (USD)')
     st.pyplot(fig)
 
     # LSTM are sensitive to the scale of the data. so we apply MinMax scaler
@@ -222,14 +224,14 @@ elif page == "Forecasting":
     testPredictPlot[len(train_predict)+(look_back*2) +
                     1:len(df1)-1, :] = test_predict
     
-    st.subheader('Actual vs Training and Testing Prices')
+    st.subheader('Actual vs Predicted Prices')
     # plot baseline and predictions
     fig = plt.figure(figsize=(12, 6))
     plt.plot(scaler.inverse_transform(df1), label='Actual Stock Prices')
     plt.plot(trainPredictPlot, label='Training Predicted Prices')
     plt.plot(testPredictPlot, label='Testing Predicted Prices')
-    plt.xlabel('Time')
-    plt.ylabel('Price')
+    plt.xlabel('Days')
+    plt.ylabel('Price (USD)')
     plt.legend()
     st.pyplot(fig)
 
@@ -269,22 +271,28 @@ elif page == "Forecasting":
     day_new=np.arange(1,101)
     day_pred=np.arange(101,131)
 
-    st.subheader('Actual and 10 days Forecasting of Stock Prices')
+    st.subheader('Actual vs Forecasted Prices (Next 10 Days)')
     fig = plt.figure(figsize=(12, 6))
     plt.plot(day_new,scaler.inverse_transform(df1[1158:]))
     plt.plot(day_pred,scaler.inverse_transform(lst_output))
+    plt.xlabel('Days')
+    plt.ylabel('Price (USD)')
     st.pyplot(fig)
 
     df3=df1.tolist()
     df3.extend(lst_output)
-    st.subheader('Actual Stock Prices to compare accuracy')
+    st.subheader('Actual Stock Prices to comparison')
     fig = plt.figure(figsize=(12, 6))
     plt.plot(df3[1200:])
+    plt.xlabel('Days')
+    plt.ylabel('Price (USD)')
     st.pyplot(fig)
     df3=scaler.inverse_transform(df3).tolist()
     st.subheader('Actual Stock Prices')
     fig = plt.figure(figsize=(12, 6))
     plt.plot(df3)
+    plt.xlabel('Days')
+    plt.ylabel('Price (USD)')
     st.pyplot(fig)
     
 
